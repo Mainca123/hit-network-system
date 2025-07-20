@@ -3,7 +3,7 @@ version: '3.8'
 services:
   backend:
     build:
-      context: ./backend
+      context: .
       dockerfile: Dockerfile
     container_name: backend
     ports:
@@ -46,15 +46,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-
-  pinger:
-    build:
-      context: ./requester
-      dockerfile: Dockerfile
-    container_name: pinger
-    depends_on:
-      - backend
-    restart: always
 
 volumes:
   postgres_data:
