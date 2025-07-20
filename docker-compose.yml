@@ -3,11 +3,11 @@ version: '3.8'
 services:
   backend:
     build:
-      context: .
+      context: ./backend
       dockerfile: Dockerfile
     container_name: backend
     ports:
-      - "8081:8081"
+      - "8080:8080"
     depends_on:
       db:
         condition: service_healthy
@@ -47,24 +47,14 @@ services:
       timeout: 5s
       retries: 5
 
+  pinger:
+    build:
+      context: ./requester
+      dockerfile: Dockerfile
+    container_name: pinger
+    depends_on:
+      - backend
+    restart: always
+
 volumes:
   postgres_data:
-#   db:
-#     image: mysql:8.0
-#     container_name: db
-#     ports:
-#       - "3306:3306"
-#     environment:
-#       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-#       MYSQL_DATABASE: Hit_Network
-#     volumes:
-#       - db_data:/var/lib/mysql
-#     healthcheck:
-#       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot"]
-#       interval: 10s
-#       timeout: 5s
-#       retries: 5
-
-
-
-
